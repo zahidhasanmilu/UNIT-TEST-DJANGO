@@ -29,7 +29,6 @@ class Category(BaseModel):
     def __str__(self):
         return self.title
 
-
 class Blog(BaseModel):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True, null=True, max_length=300)
@@ -54,7 +53,7 @@ class Blog(BaseModel):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.title
-
+        return self.title      
+        
     def get_absolute_url(self):
         return reverse("blog_detail", kwargs={"slug": self.slug})
