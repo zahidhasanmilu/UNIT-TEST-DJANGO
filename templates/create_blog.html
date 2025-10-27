@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Create Blog
+{% endblock title %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4">Create New Blog</h2>
+    <form action="{% url 'create_blog' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Create Blog</button>
+     <a href="{% url 'blogs_list' %}" class="btn btn-secondary">Back to Blog List</a>
+
+    </form> 
+</div>
+{% endblock content %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    homepage
+{% endblock title %}
+    
+
+
+{% block content %}
+    
+<div class="full-screen-center bg-light">
+        <div class="container text-center">
+            
+            <h1 class="display-4 mb-5 text-dark">স্বাগতম! আপনার প্রধান কাজগুলি বাছুন:</h1>
+
+            <div class="row justify-content-center g-3">
+                
+                <div class="col-12 col-md-4">
+                    <a href="{% url 'blogs_list' %}" class="btn btn-primary btn-lg w-100 py-3 shadow-sm" role="button">
+                        <i class="bi bi-box-fill"></i> BLOGS
+                    </a>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <a href="#" class="btn btn-success btn-lg w-100 py-3 shadow-sm" role="button">
+                        <i class="bi bi-plus-circle-fill"></i> গুরুত্বপূর্ণ কাজ ২
+                    </a>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <a href="#" class="btn btn-warning btn-lg w-100 py-3 shadow-sm text-dark" role="button">
+                        <i class="bi bi-gear-fill"></i> সেটিংস ও তথ্য ৩
+                    </a>
+                </div>
+
+            </div>
+            </div>
+    </div>
+{% endblock content %}
+    
