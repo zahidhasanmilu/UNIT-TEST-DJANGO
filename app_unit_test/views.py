@@ -47,6 +47,9 @@ def create_blog(request):
 
 def blog_update(request, slug):
     blog = Blog.objects.get(slug=slug)
+    if blog.author != request.user:
+        return HttpResponse("You are not authorized to edit this blog.", status=403)
+    
     if request.method == 'POST':
         form = BlogForm(request.POST, instance=blog)
         if form.is_valid():
@@ -62,3 +65,13 @@ def blog_update(request, slug):
         'blog': blog
     }
     return render(request, 'blog_update.html', context)
+
+
+
+def blog_delete(request, slug):    
+    blog = Blog.objects.get(slug=slug)
+    if blog.author != request.user:
+        return HttpResponse("You are not authorized to delete this blog.", status=403)
+    
+    blog.delete()
+    return redirect('blogs_list')

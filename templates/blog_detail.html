@@ -15,5 +15,6 @@
     <p>{{blog.category.title}}</p>
     <a href="{% url 'blogs_list' %}" class="btn btn-secondary">Back to Blog List</a>
     <a href="{% url 'blog_update' blog.slug %}" class="btn btn-primary">Edit Blog</a>
+    <a href="{% url 'blog_delete' blog.slug %}" class="btn btn-danger">Delete Blog</a>
 </div>
 {% endblock content %}  
