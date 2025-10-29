@@ -31,14 +31,14 @@ class test__Views(TestCase):
     def test_blogs_list_view(self):
         response = self.client.get(reverse('blogs_list'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'blogs_list.html')
+        self.assertTemplateUsed(response, 'unit_test/blogs_list.html')
         self.assertIn(self.blog, response.context['blogs'])
     # test_blog_detail_view
 
     def test_blog_detail_view(self):
         response = self.client.get(reverse('blog_detail', args=[self.blog.slug]))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'blog_detail.html')
+        self.assertTemplateUsed(response, 'unit_test/blog_detail.html')
         self.assertEqual(response.context['blog'], self.blog)
     # test_create_blog_view
 
@@ -46,7 +46,7 @@ class test__Views(TestCase):
         self.client.login(username='testuser', password='password')
         response = self.client.get(reverse('create_blog'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'create_blog.html')
+        self.assertTemplateUsed(response, 'unit_test/create_blog.html')
     # test_create_blog_view_post
 
     def test_create_blog_view_post(self):
@@ -67,7 +67,7 @@ class test__Views(TestCase):
         response = self.client.get(
             reverse('blog_update', args=[self.blog.slug]))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'blog_update.html')
+        self.assertTemplateUsed(response, 'unit_test/blog_update.html')
         self.assertEqual(response.context['form'].instance, self.blog)
         
     # test_blog_update_view_post

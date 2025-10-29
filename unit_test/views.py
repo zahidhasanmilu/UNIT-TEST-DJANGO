@@ -17,7 +17,7 @@ def blogs_list(request):
     context = {
         'blogs': blogs
     }
-    return render(request, 'blogs_list.html', context)
+    return render(request, 'unit_test/blogs_list.html', context)
 
 
 def blog_detail(request, slug):
@@ -25,7 +25,7 @@ def blog_detail(request, slug):
     context = {
         'blog': blog
     }
-    return render(request, 'blog_detail.html', context)
+    return render(request, 'unit_test/blog_detail.html', context)
 
 
 def create_blog(request):
@@ -35,14 +35,14 @@ def create_blog(request):
             obj = form.save(commit=False)
             obj.author = request.user  # Assuming the user is logged in
             obj.save()
-            return redirect('blog_detail', slug=obj.slug)
+            return redirect('unit_test/blog_detail', slug=obj.slug)
     else:
         form = BlogForm()
 
     context = {
         'form': form
     }
-    return render(request, 'create_blog.html', context)
+    return render(request, 'unit_test/create_blog.html', context)
 
 
 def blog_update(request, slug):
@@ -64,7 +64,7 @@ def blog_update(request, slug):
         'form': form,
         'blog': blog
     }
-    return render(request, 'blog_update.html', context)
+    return render(request, 'unit_test/blog_update.html', context)
 
 
 
