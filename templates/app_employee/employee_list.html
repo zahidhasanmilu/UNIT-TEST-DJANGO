@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+list of employees
+{% endblock title %}
+
+
+{% block content %}
+
+<div class="container my-5">
+    <div class="mb-4">
+        <a href="{% url 'employee_create' %}" class="btn btn-success">Create New Employee</a>
+    </div>
+    <h2 class="mb-4">Employee List</h2>
+    <div class="list-group">
+        {% for employee in employees %}
+        <a href="{% url 'employee_detail' employee.pk %}" class="list-group-item list-group-item-action">
+            <h5 class="mb-1">{{ employee.first_name }} {{ employee.last_name }}</h5>
+            <p class="mb-1">{{ employee.email }}</p>
+            <small>Department: {{ employee.department.name }}</small>
+        </a>
+        {% empty %}
+        <p>No employees available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

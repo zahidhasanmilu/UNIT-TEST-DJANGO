@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %}
+Documentation List
+{% endblock title %}
+
+
+
+{% block content %}
+<div class="container my-5">
+    <!--create Blog section-->
+    <div class="mb-4">
+        <a href="" class="btn btn-success">Create New Documentation</a>
+    </div>
+    <h2 class="mb-4">Documentation List</h2>
+    <div class="list-group">
+        {% for documentation in documentation %}
+        <a href="" class="list-group-item list-group-item-action m-3">
+            <h6 class="mb-1">{{ documentation.title }}</h6>
+
+            <small>Languague:{{ documentation.language.name }}</small> |
+            <small>Published on: {{ documentation.created_at }}</small>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,78 @@
+{% extends 'documentation/docbase.html' %}
+
+
+{% block content %}
+<div class="col-md-6 col-lg-7 main-content">
+
+    <h1 class="mb-4 text-dark fw-bolder">{{documentation.title}}</h1>
+
+    <hr class="my-4 border-danger">
+    <article>
+        <p>
+            {{documentation.content|safe}}
+        </p>
+        <div class="alert alert-success mt-4">
+            <i class="bi bi-check-circle-fill me-2"></i> **Use Case:** Perfect for global site navigation
+            data like categories or recent posts.
+        </div>
+        <!-- Example Snippet -->
+        <h3>Example Snippet</h3>
+        <pre class="bg-dark text-white p-3 rounded"><code class="language-python">
+# settings.py
+TEMPLATES = [
+    {
+        # ...
+        'OPTIONS': { 
+            'context_processors': [
+                'myapp.context_processors.my_global_data',
+            ],
+        },
+    },
+]
+                    </code></pre>
+        <!-- Conclusion -->
+        <h3>Conclusion</h3>
+        <p class="mb-5">
+            This section concludes the current topic. The right sidebar provides all necessary metadata for
+            this article.
+        </p>
+    </article>
+
+</div>
+
+<div class="col-md-3 col-lg-3 bg-light sticky-section border-start">
+    <div class="p-3">
+        <h5 class="mt-2 mb-3 text-danger"><i class="bi bi-info-circle-fill me-2"></i> Article Info</h5>
+
+        <ul class="list-group shadow-sm">
+            <li class="list-group-item d-flex justify-content-between align-items-center bg-warning bg-opacity-10">
+                **Author**
+                <span class="badge bg-warning text-dark rounded-pill">{{documentation.created_by.username}}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                **Published Date**
+                <span class="badge bg-secondary rounded-pill">{{documentation.created_at}}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                **Category**
+                <span class="badge bg-primary rounded-pill">{{documentation.language.name}}</span>
+            </li>
+        </ul>
+
+        <h5 class="mt-4 mb-3 text-danger"><i class="bi bi-tags-fill me-2"></i> Tags</h5>
+        <div class="d-flex flex-wrap gap-2">
+            {% for tag in documentation.tags.all %}
+            <span class="badge text-bg-info">{{tag.name}}</span>
+            {% endfor %}
+        </div>
+
+        <h5 class="mt-4 mb-3 text-danger"><i class="bi bi-tags-fill me-2"></i> Framework</h5>
+        <div class="d-flex flex-wrap gap-2">
+            {% for framework in documentation.framwork.all %}
+            <span class="badge text-bg-info">{{framework.name}}</span>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}
