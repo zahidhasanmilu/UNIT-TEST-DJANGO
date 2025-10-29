@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from app_employee.forms import EmployeeForm
-from app_employee.models import Employee
+from employee.forms import EmployeeForm
+from employee.models import Employee
 
 # Create your views here.
 def employee_list(request):
@@ -9,7 +9,7 @@ def employee_list(request):
     context = {
         'employees': employees
     }
-    return render(request, 'app_employee/employee_list.html', context)
+    return render(request, 'employee/employee_list.html', context)
 
 
 def employee_detail(request, pk):
@@ -17,7 +17,7 @@ def employee_detail(request, pk):
     context = {
         'employee': employee
     }
-    return render(request, 'app_employee/employee_detail.html', context)
+    return render(request, 'employee/employee_detail.html', context)
 
 
 def employee_create(request):
@@ -29,7 +29,7 @@ def employee_create(request):
         if form.is_valid():
             form.save()
             return redirect('employee_list')
-        return render(request, "app_employee/employee_create.html", {'form': form})
+        return render(request, "employee/employee_create.html", {'form': form})
 
     form = EmployeeForm()
-    return render(request, "app_employee/employee_create.html", {'form': form})
+    return render(request, "employee/employee_create.html", {'form': form})

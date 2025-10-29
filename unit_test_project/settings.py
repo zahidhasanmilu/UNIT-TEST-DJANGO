@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',  # If you want image/file uploads
 
     'unit_test', # added unit_test app
-    'app_employee',  # added employee app
+    'employee',  # added employee app
     'documentation'  # added employee app
 
 ]

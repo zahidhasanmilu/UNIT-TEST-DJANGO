@@ -38,7 +38,7 @@ class Employee(BaseModel):
     email = models.EmailField(unique=True)
     Dob = models.DateField()
     department = models.ForeignKey(
-        Department, on_delete=models.SET_NULL, null=True, blank=True, related_name='employees')
+        Department, on_delete=models.SET_NULL, null=True, blank=True, related_name='department_employees')
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
