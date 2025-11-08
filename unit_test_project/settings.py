@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,14 +39,22 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
+    'unit_test',  # added unit_test app
+    'employee',  # added employee app
+    'documentation',  # added employee app,
+
+    'graphene_django',  # added graphene_django app,
+
+
     'ckeditor',
     'ckeditor_uploader',  # If you want image/file uploads
 
-    'unit_test', # added unit_test app
-    'employee',  # added employee app
-    'documentation'  # added employee app
-
 ]
+
+GRAPHENE = {
+    'SCHEMA': 'documentation.schema.schema',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,7 +79,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'documentation.context_processors.all_documentations',
-                # 
+                #
             ],
         },
     },
@@ -120,7 +129,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-import os
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
@@ -138,3 +146,84 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+####################-------------Cache with Redis --------------####################
+
+CACHES = {
+
+    "default": {
+
+        "BACKEND": "django_redis.cache.RedisCache",
+
+        "LOCATION": "redis://127.0.0.1:6379/1",
+
+        "OPTIONS": {
+
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+
+        }
+
+    }
+
+}
+
+
+
+# ------------------  start logggin    ------------------#
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "standard": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+        "file": {
+            "level": "ERROR",
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR / "log/debug.log",
+            "formatter": "standard",
+        },
+        "rotating_file": {
+            "level": "ERROR",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": BASE_DIR / "log/rotating_debug.log",
+            "formatter": "standard",
+            "maxBytes": 1024 * 1024 * 5,  # 5 MB
+            "backupCount": 3,
+        },
+        "timed_rotating_file": {
+            "level": "ERROR",
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "filename": BASE_DIR / "log/timed_debug.log",
+            "formatter": "standard",
+            "when": "midnight",
+            "interval": 1,
+            "backupCount": 3,
+        },
+    },
+    "loggers": {
+        "": {
+            "handlers": ["console"],
+            "propagate": True,
+        },
+        "create_blog": {
+            "handlers": ["rotating_file", "timed_rotating_file"],
+            "level": "DEBUG", 
+            "propagate": False,
+        },
+    },
+}
+# ------------------   end logggin    ------------------#

@@ -1,5 +1,9 @@
 from django.shortcuts import render
 from documentation.models import Documentation
+# Cache
+from django.views.decorators.cache import cache_page
+
+
 
 
 def documentation_list(request):
@@ -11,6 +15,7 @@ def documentation_list(request):
 
     return render(request, 'documentation/documentation_list.html', context)
 
+@cache_page(60 * 2)
 def documentation_detail(request, pk):
     documentation = Documentation.objects.select_related(
         'language'
