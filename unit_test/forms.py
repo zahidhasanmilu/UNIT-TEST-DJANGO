@@ -1,6 +1,6 @@
-from django.urls import path
 from django import forms
-from unit_test.models import Blog, Category
+from unit_test.models import Blog
+
 
 class BlogForm(forms.ModelForm):
     class Meta:
@@ -11,5 +11,3 @@ class BlogForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'class': 'form-control'}),
             'category': forms.Select(attrs={'class': 'form-control'}),
         }
-        
-        

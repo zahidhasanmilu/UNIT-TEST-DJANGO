@@ -1,11 +1,11 @@
 from django.db import models
-from django.urls import reverse
 from unit_test.models import BaseModel
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from ckeditor.fields import RichTextField
 
-#Table Languague
+
+# Table Languague
 class Languague(BaseModel):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True, blank=True)
@@ -18,7 +18,8 @@ class Languague(BaseModel):
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
-#Table Framwork
+
+# Table Framwork
 class Framwork(BaseModel):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True, blank=True)
@@ -31,7 +32,8 @@ class Framwork(BaseModel):
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
-#Table tags
+
+# Table tags
 class tags(BaseModel):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True, blank=True)
@@ -44,19 +46,24 @@ class tags(BaseModel):
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
-#Table Documentation
+
+# Table Documentation
 class Documentation(BaseModel):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
     created_by = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='user_documentation')
+        User, on_delete=models.CASCADE, related_name='user_documentation'
+    )
     content = RichTextField(blank=True, null=True)
     language = models.ForeignKey(
-        Languague, on_delete=models.CASCADE, related_name='language_documentation')
+        Languague, on_delete=models.CASCADE, related_name='language_documentation'
+    )
     framwork = models.ManyToManyField(
-        Framwork, related_name='framwork_documentation', blank=True, null=True)
+        Framwork, related_name='framwork_documentation', blank=True, null=True
+    )
     tags = models.ManyToManyField(
-        tags, related_name='documentation', blank=True, null=True)
+        tags, related_name='documentation', blank=True, null=True
+    )
 
     def __str__(self):
         return self.title

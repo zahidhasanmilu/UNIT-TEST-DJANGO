@@ -38,18 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-
     'unit_test',  # added unit_test app
     'employee',  # added employee app
     'documentation',  # added employee app,
-
     'graphene_django',  # added graphene_django app,
-
-
     'ckeditor',
     'ckeditor_uploader',  # If you want image/file uploads
-
 ]
 
 GRAPHENE = {
@@ -134,9 +128,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'staticfiles'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -151,23 +143,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ####################-------------Cache with Redis --------------####################
 
 CACHES = {
-
     "default": {
-
         "BACKEND": "django_redis.cache.RedisCache",
-
         "LOCATION": "redis://127.0.0.1:6379/1",
-
         "OPTIONS": {
-
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-
-        }
-
+        },
     }
-
 }
-
 
 
 # ------------------  start logggin    ------------------#
@@ -221,7 +204,7 @@ LOGGING = {
         },
         "create_blog": {
             "handlers": ["rotating_file", "timed_rotating_file"],
-            "level": "DEBUG", 
+            "level": "DEBUG",
             "propagate": False,
         },
     },

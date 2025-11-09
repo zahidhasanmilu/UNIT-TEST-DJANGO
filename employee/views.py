@@ -3,20 +3,17 @@ from django.shortcuts import redirect, render
 from employee.forms import EmployeeForm
 from employee.models import Employee
 
+
 # Create your views here.
 def employee_list(request):
     employees = Employee.objects.all()
-    context = {
-        'employees': employees
-    }
+    context = {'employees': employees}
     return render(request, 'employee/employee_list.html', context)
 
 
 def employee_detail(request, pk):
     employee = Employee.objects.get(pk=pk)
-    context = {
-        'employee': employee
-    }
+    context = {'employee': employee}
     return render(request, 'employee/employee_detail.html', context)
 
 

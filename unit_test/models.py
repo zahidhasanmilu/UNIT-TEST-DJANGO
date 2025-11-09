@@ -1,13 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 # slugify
 from django.urls import reverse
 from django.utils.text import slugify
+
 # UUID
 import uuid
 
 
-#-------------------- Create your models here.---------------------#
+# -------------------- Create your models here.---------------------#
+
 
 # Base Model
 class BaseModel(models.Model):
@@ -32,15 +35,22 @@ class Category(BaseModel):
     def __str__(self):
         return self.title
 
+
 # Blog Model
 class Blog(BaseModel):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True, null=True, max_length=300)
     content = models.TextField()
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='user_blogs')
+        User, on_delete=models.CASCADE, related_name='user_blogs'
+    )
     category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='category_blogs')
+        Category,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='category_blogs',
+    )
 
     # Override save method to auto-generate slugW
     def save(self, *args, **kwargs):
@@ -58,10 +68,8 @@ class Blog(BaseModel):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.title      
-    
-    # Get absolute URL        
+        return self.title
+
+    # Get absolute URL
     def get_absolute_url(self):
         return reverse("blog_detail", kwargs={"slug": self.slug})
-    
-    
