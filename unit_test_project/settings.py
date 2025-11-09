@@ -24,10 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-tca+!mhsx-hdxg*yerhh9-vq=y@8fol*ql!6f61qz2(!l78e&%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+#-------------------
+DEBUG = False
 
+ALLOWED_HOSTS = ['*']
+
+#-------------------
 
 # Application definition
 
@@ -44,6 +49,7 @@ INSTALLED_APPS = [
     'graphene_django',  # added graphene_django app,
     'ckeditor',
     'ckeditor_uploader',  # If you want image/file uploads
+    'debug_toolbar',  # added debug_toolbar app
 ]
 
 GRAPHENE = {
@@ -58,6 +64,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+]
+
+INTERNAL_IPS = [
+    '127.0.0.1',
 ]
 
 ROOT_URLCONF = 'unit_test_project.urls'
@@ -65,7 +76,7 @@ ROOT_URLCONF = 'unit_test_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

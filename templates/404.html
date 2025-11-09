@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Access Denied | DOS System</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+        
+        body {
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'VT323', monospace; 
+            color: #00ff00; /* রেট্রো সবুজ টেক্সট */
+            overflow: hidden;
+        }
+        
+        .terminal-container {
+            width: 90%;
+            max-width: 700px;
+            height: 400px;
+            background-color: #0d0d0d;
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 15px #00ff00, inset 0 0 5px #00ff00;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            animation: flicker 1.5s infinite alternate; /* ফ্লিকার ইফেক্ট */
+        }
+        
+        .terminal-header {
+            background-color: #004d00;
+            color: #00ff00;
+            padding: 5px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #00ff00;
+            font-size: 0.9em;
+        }
+        
+        .terminal-body {
+            flex-grow: 1;
+            padding: 10px;
+            overflow-y: auto;
+            font-size: 1.1em;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            scrollbar-width: none; /* Firefox স্ক্রলবার হাইড */
+        }
+
+        .terminal-body::-webkit-scrollbar {
+            display: none; /* Chrome স্ক্রলবার হাইড */
+        }
+        
+        #output {
+            margin: 0;
+            color: #00ff00;
+        }
+        
+        .input-line {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .prompt {
+            color: #00ff00;
+            margin-right: 5px;
+        }
+        
+        #command-input {
+            background-color: transparent;
+            border: none;
+            color: #00ff00;
+            font-family: 'VT323', monospace;
+            font-size: 1.1em;
+            flex-grow: 1;
+            outline: none;
+            caret-color: #00ff00;
+        }
+        
+        /* CSS Keyframes */
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.9; }
+        }
+        
+        .terminal-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                transparent 0,
+                rgba(0, 0, 0, 0.3) 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            animation: scanline 8s linear infinite;
+            opacity: 0.2;
+        }
+
+        @keyframes scanline {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+
+        /* হেডার বাটনগুলি দরকার নেই, তাই শুধু ডেকোরেশন রাখছি */
+        .terminal-buttons { display: none; } 
+    </style>
+</head>
+<body>
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <span class="terminal-title">C:\DOS\ERROR_404.EXE</span>
+            <div class="terminal-buttons"></div>
+        </div>
+        <div class="terminal-body">
+            <pre id="output"></pre>
+            <div class="input-line">
+                <span class="prompt">C:\&gt;</span><input type="text" id="command-input" autofocus>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const outputElement = document.getElementById('output');
+            const commandInput = document.getElementById('command-input');
+            const history = [];
+            let historyIndex = -1;
+
+            const messages = [
+                "FATAL ERROR: 404 - FILE NOT FOUND",
+                "The requested resource could not be located.",
+                "ERROR CODE: 0x404 (RESOURCE_NOT_FOUND)",
+                "ACCESS DENIED.",
+                "",
+                "Type 'HOME' to return to safety or 'HELP' for options."
+            ];
+
+            let messageIndex = 0;
+
+            function typeWriterEffect() {
+                if (messageIndex < messages.length) {
+                    const line = messages[messageIndex];
+                    let charIndex = 0;
+                    const typingInterval = setInterval(() => {
+                        outputElement.textContent += line[charIndex];
+                        charIndex++;
+                        if (charIndex === line.length) {
+                            clearInterval(typingInterval);
+                            outputElement.textContent += '\n'; 
+                            messageIndex++;
+                            setTimeout(typeWriterEffect, 50); 
+                        }
+                    }, 30); 
+                } else {
+                    commandInput.focus();
+                }
+            }
+
+            typeWriterEffect();
+
+            commandInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    const command = commandInput.value.trim().toUpperCase();
+                    outputElement.textContent += `C:\\> ${commandInput.value}\n`;
+                    history.push(command);
+                    historyIndex = history.length;
+                    commandInput.value = '';
+
+                    switch (command) {
+                        case 'HELP':
+                            outputElement.textContent += "Available commands:\n";
+                            outputElement.textContent += "  HOME    - Return to the homepage (Goes to /).\n";
+                            outputElement.textContent += "  CLEAR   - Clear the terminal screen.\n";
+                            outputElement.textContent += "  STATUS  - Check system status.\n";
+                            break;
+                        case 'HOME':
+                            outputElement.textContent += "Redirecting to safety...\n";
+                            setTimeout(() => {
+                                window.location.href = '/'; 
+                            }, 1000);
+                            break;
+                        case 'CLEAR':
+                            outputElement.textContent = '';
+                            messageIndex = 0;
+                            typeWriterEffect();
+                            break;
+                        case 'STATUS':
+                            outputElement.textContent += "System Status: Online but critical sectors missing.\n";
+                            outputElement.textContent += "Time: " + new Date().toLocaleTimeString('en-US') + "\n";
+                            break;
+                        case '':
+                            break;
+                        default:
+                            outputElement.textContent += `ERROR: '${command}' is not a valid command.\n`;
+                            break;
+                    }
+                    outputElement.scrollTop = outputElement.scrollHeight;
+                } else if (event.key === 'ArrowUp') {
+                    event.preventDefault(); 
+                    if (historyIndex > 0) {
+                        historyIndex--;
+                        commandInput.value = history[historyIndex];
+                    }
+                } else if (event.key === 'ArrowDown') {
+                    event.preventDefault(); 
+                    if (historyIndex < history.length - 1) {
+                        historyIndex++;
+                        commandInput.value = history[historyIndex];
+                    } else if (historyIndex === history.length - 1) {
+                        historyIndex++;
+                        commandInput.value = '';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

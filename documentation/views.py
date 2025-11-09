@@ -5,6 +5,8 @@ from documentation.models import Documentation
 from django.views.decorators.cache import cache_page
 
 
+
+
 def documentation_list(request):
     documentation = Documentation.objects.all()
 

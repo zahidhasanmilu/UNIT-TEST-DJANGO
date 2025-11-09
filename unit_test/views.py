@@ -5,6 +5,8 @@ from unit_test.models import Blog
 from unit_test.forms import BlogForm
 
 # Create your views here.
+def custom_page_not_found_view(request, exception):
+    return render(request, '404.html', status=404)
 
 
 def index(request):
