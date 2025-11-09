@@ -22,9 +22,9 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     
     # 2. Django Debug Toolbar (DDT)
-    urlpatterns += [
-        path('__debug__/', include('debug_toolbar.urls')),
-    ]
+    # urlpatterns += [
+    #     path('__debug__/', include('debug_toolbar.urls')),
+    # ]
 
 # Wrong Path Exception Handling
 handler404 = 'unit_test.views.custom_page_not_found_view'
