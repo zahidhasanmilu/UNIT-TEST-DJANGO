@@ -37,6 +37,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+  
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -90,7 +92,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'unit_test_project.wsgi.application'
+# WSGI_APPLICATION = 'unit_test_project.wsgi.application'
+ASGI_APPLICATION = 'unit_test_project.asgi.application'
 
 
 # Database
