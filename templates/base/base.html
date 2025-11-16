@@ -44,5 +44,22 @@
     {% endblock content %}
         
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        ws = new WebSocket("ws://localhost:8000/ws/sc/");
+        ws.onopen = function() {
+            console.log("WebSocket connection opened");
+            ws.send("Hello, Server!, Im Client");
+        };
+        ws.onmessage = function(event) {
+            console.log("Message from server:", event);
+        };
+        ws.onerror = function(event) {
+            console.error("WebSocket error:", event);
+        };
+        ws.onclose = function(event) {
+            console.log("WebSocket connection closed", event);
+        };
+    </script>
 </body>
 </html>
