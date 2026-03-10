@@ -29,3 +29,4 @@ if settings.DEBUG:
 # Wrong Path Exception Handling
 handler404 = 'unit_test.views.custom_page_not_found_view'
 
+
